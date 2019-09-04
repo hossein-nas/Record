@@ -16,7 +16,6 @@
             <p>ساعت</p>
             <h3 class="time">
                 16:24
-                <span>ب.ظ</span>
             </h3>
             <div class="trained">
 120
@@ -28,10 +27,10 @@
         </div>
         <div class="action-panel">
             <div class="register-btn">
-                ثبت نام جدید
+                ثبت نام جديد
             </div>
             <div class="recharge-btn">
-                تمدید اشتراک
+                تمديد اشتراک
             </div>
             <div class="list-users">
                 مشاهده کاربران

@@ -26,6 +26,7 @@ body {
 }
 
 .container .cabinets,
+.container .main-section .info-panel,
 .container .main-section .action-panel .list-users,
 .container .main-section .action-panel .recharge-btn,
 .container .main-section .action-panel .register-btn {

@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function(){
-	return view('home');
-});
+Route::get('/', 'RecordController@index');
+Route::get('/get_info', 'RecordController@get_info');
+Route::post('/get_info', 'RecordController@get_info');
 
 
 

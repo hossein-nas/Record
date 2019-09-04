@@ -42,6 +42,7 @@
             height: 100%;
             float: right;
             text-align: center;
+            @extend %no-select;
             >p{
                 font-size: .9rem;
                 color: #555;
