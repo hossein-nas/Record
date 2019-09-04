@@ -3,7 +3,24 @@
 @section('content')
 <div class="container">
     <div class="main-section">
-        سلام به همگی
+        <div class="info-panel">
+
+        </div>
+        <div class="action-panel">
+            <div class="register-btn">
+                ثبت نام جدید
+            </div>
+            <div class="recharge-btn">
+                تمدید اشتراک
+            </div>
+            <div class="list-users">
+                مشاهده کاربران
+            </div>
+
+        </div>
+        <div class="log-panel">
+
+        </div>
 
     </div>
     <div class="cabinets">
