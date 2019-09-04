@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 *,
 *:before,
 *:after {
@@ -84,6 +86,81 @@ body {
   border-left: 2px solid #dedede;
   height: 100%;
   float: right;
+  text-align: center;
+}
+
+.container .main-section .info-panel > p {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+.container .main-section .info-panel h3 {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.container .main-section .info-panel h3.date {
+  color: #0b651e;
+}
+
+.container .main-section .info-panel h3.date .day {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 7px;
+}
+
+.container .main-section .info-panel h3.date .tarikh {
+  display: block;
+  font-size: 1.6rem;
+}
+
+.container .main-section .info-panel h3.time {
+  color: blue;
+  font-size: 1.8rem;
+}
+
+.container .main-section .info-panel h3.time span {
+  font-size: 1rem;
+}
+
+.container .main-section .info-panel .trained {
+  margin-top: 30px;
+  padding-left: 10px;
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.container .main-section .info-panel .trained::before {
+  padding-right: 5px;
+  margin-top: 3px;
+  content: "\62A\645\631\6CC\646   \6A9\631\62F\647   \647\627   :";
+  display: block;
+  float: right;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.container .main-section .info-panel .registered {
+  padding-left: 10px;
+  text-align: left;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.container .main-section .info-panel .registered::before {
+  padding-right: 5px;
+  margin-top: 3px;
+  content: "\62B\628\62A\200C\646\627\645\6CC\200C\647\627\6CC   \627\645\631\648\632";
+  display: block;
+  float: right;
+  font-size: 0.9rem;
+  color: #555;
 }
 
 .container .main-section .action-panel {

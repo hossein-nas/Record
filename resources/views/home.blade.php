@@ -4,6 +4,26 @@
 <div class="container">
     <div class="main-section">
         <div class="info-panel">
+            <p>امروز</p>
+            <h3 class="date">
+                <span class="day">
+                    چهارشنبه
+                </span>
+                <span class="tarikh">
+                    98/11/27
+                </span>
+            </h3>
+            <p>ساعت</p>
+            <h3 class="time">
+                16:24
+                <span>ب.ظ</span>
+            </h3>
+            <div class="trained">
+120
+            </div>
+            <div class="registered">
+                4
+            </div>
 
         </div>
         <div class="action-panel">

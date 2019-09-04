@@ -41,6 +41,73 @@
             border-left: 2px solid #dedede;
             height: 100%;
             float: right;
+            text-align: center;
+            >p{
+                font-size: .9rem;
+                color: #555;
+                margin: 0;
+                padding: 0;
+                margin-bottom: 5px;
+
+            }
+            h3{
+                margin: 0;
+                padding: 0;
+                margin-top: 10px;
+                margin-bottom: 20px;
+                &.date{
+                    color: #0b651e;
+                    .day{
+                        display: block;
+                        font-size: 1.2rem;
+                        margin-bottom: 7px;
+                    }
+                    .tarikh{
+                        display: block;
+                        font-size: 1.6rem;
+                       }
+                }
+                &.time{
+                    color: blue;
+                    font-size: 1.8rem;
+                    span{
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            .trained{
+                margin-top: 30px;
+                padding-left: 10px;
+                text-align:left;
+                font-size: 1.2rem;
+                font-weight: bold;;
+                &::before{
+                    padding-right: 5px;
+                    margin-top: 3px;
+                    content: 'تمرین کرده ها :';
+                    display: block;
+                    float: right;
+                    font-size: .9rem;
+                    color: #555;
+                }
+            }
+            .registered{
+                padding-left: 10px;
+                text-align:left;
+                font-size: 1.2rem;
+                font-weight: bold;;
+                &::before{
+                    padding-right: 5px;
+                    margin-top: 3px;
+                    content: 'ثبت‌نامی‌های امروز';
+                    display: block;
+                    float: right;
+                    font-size: .9rem;
+                    color: #555;
+                }
+            }
+            
         }
         .action-panel{
             padding: 10px 15px;
