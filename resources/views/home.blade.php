@@ -39,6 +39,10 @@
         </div>
         <div class="log-panel">
 
+            <form action="" class='form'>
+                <input type="text" name='command' class="command-box">
+                <input type="button" class="submit-btn" name='submit' value="ارسال">
+            </form>
         </div>
 
     </div>

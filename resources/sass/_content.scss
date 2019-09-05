@@ -133,6 +133,12 @@
             width:200px;
             height: 100%;
             float:right;
+
+            .form{
+                .command-box{
+                    direction : ltr;
+                }
+            }
         }
     }
     .cabinets{

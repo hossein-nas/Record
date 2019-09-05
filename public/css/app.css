@@ -178,6 +178,10 @@ body {
   float: right;
 }
 
+.container .main-section .log-panel .form .command-box {
+  direction: ltr;
+}
+
 .container .cabinets {
   width: 100%;
   height: 160px;

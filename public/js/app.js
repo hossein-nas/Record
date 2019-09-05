@@ -10706,10 +10706,13 @@ return jQuery;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/getInfo.js */ "./resources/js/components/getInfo.js");
+/* harmony import */ var _components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/sendcommand.js */ "./resources/js/components/sendcommand.js");
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // alert("Hi there :)");
 
 
+
 Object(_components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
+Object(_components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
 /***/ }),
 
@@ -10748,6 +10751,44 @@ function get_date() {
       weakday_name.html(data.weakday_name);
       date.html(data.date);
       time.html(data.hour + ":" + data.minute);
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/sendcommand.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/sendcommand.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  $('.submit-btn').click(function () {
+    extract_command();
+  });
+});
+
+function extract_command() {
+  var command = $('.form .command-box').val();
+
+  var _data = new FormData();
+
+  _data.append('command', command);
+
+  console.log(_data);
+  $.ajax({
+    url: '/send_command',
+    type: 'POST',
+    data: {
+      'command': command
+    },
+    success: function success(data, status, xhr) {
+      console.log('done');
     }
   });
 }

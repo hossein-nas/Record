@@ -23,5 +23,10 @@ class RecordController extends Controller
         
         return $ret ;
     }
+
+    public function sendCommand(){
+        $ret = json_encode( request()->all() );
+        return $ret;
+    }
     
 }
