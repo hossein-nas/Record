@@ -10,11 +10,14 @@
     <title>باشگاه رکورد</title>
 </head>
 <body>
-    @yield('content')
-   
-   <script src="{{ mix('js/vendor.js') }}" type="text/javascript" charset="utf-8" async defer></script>
-   <script src='./js/app.js'></script> 
+    <div class="container">
 
+        @yield('content')
+        
+    </div>
+    <script src="{{ mix('js/vendor.js') }}" type="text/javascript" charset="utf-8" async defer></script>
+    <script src='./js/app.js'></script> 
+    
     @yield('scripts')
 </body>
 </html>

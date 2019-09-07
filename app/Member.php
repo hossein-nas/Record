@@ -12,11 +12,16 @@ class Member extends Model
         'lastname',
         'address',
         'telephone',
-        'mobile',
+        'national_code',
+        'mobile_number',
         'card_id'
     ];
 
     public function plan(){
-        return $this->belongsToMany('App\Plan', 'member_plan', 'member_id', 'plan_id');
+        return $this->belongsToMany('App\Plan', 'member_plan', 'member_id', 'plan_id')->withPivot('start_at', 'finished_at');
+    }
+
+    public function card(){
+        return $this->hasOne('App\Card', 'card_id');
     }
 }

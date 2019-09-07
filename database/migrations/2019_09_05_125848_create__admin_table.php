@@ -17,7 +17,7 @@ class CreateAdminTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('lastname');
-            $table->unsignedInteger('card_id');
+            $table->unsignedBigInteger('card_id');
 
 
             $table->foreign('card_id')->references('id')->on('card');

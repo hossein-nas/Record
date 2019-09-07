@@ -15,11 +15,11 @@ class CreateMemberPlanPevotTable extends Migration
     {
         Schema::create('member_plan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('member_id');
-            $table->integer('plan_id')->unsigned();
-            $table->integer('admin_id')->unsigned();
-            $table->timestamp('start_at');
-            $table->timestamp('finished_at');
+            $table->unsignedBigInteger('member_id');
+            $table->unsignedBigInteger('plan_id');
+            $table->unsignedBigInteger('admin_id');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
 
             $table->foreign('member_id')->references('id')->on('member');
             $table->foreign('admin_id')->references('id')->on('admin');

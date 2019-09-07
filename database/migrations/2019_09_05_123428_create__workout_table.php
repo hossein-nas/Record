@@ -15,8 +15,8 @@ class CreateWorkoutTable extends Migration
     {
         Schema::create('workout', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('member_id');
-            $table->unsignedINteger('cabinet_id');
+            $table->unsignedBigInteger('member_id');
+            $table->unsignedBigInteger('cabinet_id');
             $table->enum('action', ['entry','exit']);
             $table->timestamp('action_at');
 

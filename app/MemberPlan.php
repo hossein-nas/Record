@@ -15,4 +15,5 @@ class MemberPlan extends Model
         'start_at' => 'datetime',
         'finished_at' => 'datetime'
     ];
+    public $timestamps = false;
 }

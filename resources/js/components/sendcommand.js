@@ -12,7 +12,7 @@ function extract_command(){
     _data.append('command', command);
     console.log(_data);
     $.ajax({
-        url : '/send_command',
+        url : '/ajax_command',
         type : 'POST',
         data : {'command':command},
         success: function(data, status, xhr){

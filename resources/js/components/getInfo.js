@@ -19,7 +19,7 @@ function get_date(){
 
     $.ajax({
         url : '/get_info',
-        method : 'POST',
+        type : 'POST',
         success: function(data, status, xhr){
             var info_panel = $('.info-panel');
             var weakday_name = info_panel.find('.day');

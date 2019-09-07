@@ -1,7 +1,7 @@
 @extends('master_layout.master')
 
 @section('content')
-<div class="container">
+
     <div class="main-section">
         <div class="info-panel">
             <p>امروز</p>
@@ -26,15 +26,15 @@
 
         </div>
         <div class="action-panel">
-            <div class="register-btn">
+            <a class="register-btn" href="/register_new">
                 ثبت نام جديد
-            </div>
-            <div class="recharge-btn">
+            </a>
+            <a class="recharge-btn" href="/recharge">
                 تمديد اشتراک
-            </div>
-            <div class="list-users">
+            </a>
+            <a class="list-users" href="/manage_users">
                 مشاهده کاربران
-            </div>
+            </a>
 
         </div>
         <div class="log-panel">
@@ -61,7 +61,7 @@
 
             </section>
             <section class="cabinet">
-                <label for="number">4</label>
+                <label for="number" class="active">4</label>
 
             </section>
             <section class="cabinet">
@@ -92,5 +92,4 @@
         <div class="row"></div>
 
     </div>
-</div>
 @endsection

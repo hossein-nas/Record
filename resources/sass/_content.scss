@@ -116,6 +116,9 @@
             border-left: 2px solid #dedede;
             height: 100%;
             float: right;
+            >a{
+                text-decoration: none;
+            }
             .register-btn{
                 @extend %btn;
                 @extend %primary;
@@ -164,6 +167,7 @@
                 height: 74px;
                 margin-left: 3px;
                 background-color: white;
+                position: relative;
                 >label{
                     background-color: #4d8c4d;
                     color: white;
@@ -175,6 +179,21 @@
                     border-radius: 20px;
                     height: 25px;
                     line-height: 25px;
+                }
+                >label.active{
+                    background-color: #d482a0;
+                }
+
+                &::after{
+                    content: '';
+                    display: block;
+                    width: 5px;
+                    height: 5px;
+                    background-color: #888;
+                    border-radius: 5px;
+                    position: absolute;
+                    top: 40px;
+                    left: 3px;
                 }
                 
             }

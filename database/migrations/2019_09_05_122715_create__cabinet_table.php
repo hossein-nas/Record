@@ -16,6 +16,7 @@ class CreateCabinetTable extends Migration
         Schema::create('cabinet', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('cabinet_no')->unique();
+            $table->boolean('status')->default('0');
         });
     }
 

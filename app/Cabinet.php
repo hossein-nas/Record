@@ -8,7 +8,7 @@ class Cabinet extends Model
 {
     protected $table = 'cabinet';
     protected $fillable = [
-        'cabinet_no'
+        'cabinet_no','status'
     ];
 
     public $timestamps = false;

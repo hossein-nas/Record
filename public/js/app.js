@@ -10707,12 +10707,67 @@ return jQuery;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/getInfo.js */ "./resources/js/components/getInfo.js");
 /* harmony import */ var _components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/sendcommand.js */ "./resources/js/components/sendcommand.js");
+/* harmony import */ var _components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/getCabinetInfo.js */ "./resources/js/components/getCabinetInfo.js");
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // alert("Hi there :)");
+
 
 
 
 Object(_components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 Object(_components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
+Object(_components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+/***/ }),
+
+/***/ "./resources/js/components/getCabinetInfo.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/getCabinetInfo.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+var init = 0;
+var $data = null;
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  getCabinetInfo();
+});
+
+function getCabinetInfo() {
+  $.ajax({
+    url: '/cabinet_info',
+    type: 'POST',
+    data: {
+      'init': true
+    },
+    success: function success(_data, $status) {
+      $data = JSON.parse(_data);
+      init = 1;
+      setTimeout(getCabinetInfo, 5000);
+      manageHTML($data);
+    }
+  });
+}
+
+function manageHTML($data) {
+  var cabinets_div = $('.cabinets');
+  var updated_nodes = $("<div class='row'>");
+  $data.map(function (_data, _in) {
+    console.log(_in);
+    var section = $("<section>").addClass('cabinet');
+
+    if (_data.status == 1) {
+      section.append($("<label for='number'>").addClass('active').html(_data.cabinet_no));
+    } else {
+      section.append($("<label for='number'>").html(_data.cabinet_no));
+    }
+
+    updated_nodes.append(section);
+  });
+  cabinets_div.html(updated_nodes);
+}
 
 /***/ }),
 
@@ -10742,7 +10797,7 @@ window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jqu
 function get_date() {
   $.ajax({
     url: '/get_info',
-    method: 'POST',
+    type: 'POST',
     success: function success(data, status, xhr) {
       var info_panel = $('.info-panel');
       var weakday_name = info_panel.find('.day');
@@ -10782,7 +10837,7 @@ function extract_command() {
 
   console.log(_data);
   $.ajax({
-    url: '/send_command',
+    url: '/ajax_command',
     type: 'POST',
     data: {
       'command': command

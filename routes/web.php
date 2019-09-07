@@ -13,8 +13,16 @@
 
 Route::get('/', 'RecordController@index');
 Route::get('/get_info', 'RecordController@get_info');
+Route::get('/register_new', 'RecordController@register_new');
+Route::get('/register_new', 'RecordController@register_new');
+
 Route::post('/get_info', 'RecordController@get_info');
-Route::post('/send_command', 'RecordController@sendCommand');
+Route::post('/ajax_command', 'RecordController@ajaxCommand');
+Route::post('/cabinet_manager', 'RecordController@cabinetManager');
+
+Route::post('/cabinet_info', 'RecordController@get_cabinet_info');
+// Route::get('/cabinet_manager', 'RecordController@cabinetManager');
+
 
 
 
