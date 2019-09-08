@@ -10709,7 +10709,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/sendcommand.js */ "./resources/js/components/sendcommand.js");
 /* harmony import */ var _components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/getCabinetInfo.js */ "./resources/js/components/getCabinetInfo.js");
 /* harmony import */ var _components_registerNew_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/registerNew.js */ "./resources/js/components/registerNew.js");
+/* harmony import */ var _components_rechargeCard_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/rechargeCard.js */ "./resources/js/components/rechargeCard.js");
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // alert("Hi there :)");
+
 
 
 
@@ -10719,6 +10721,7 @@ Object(_components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 Object(_components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 Object(_components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
 Object(_components_registerNew_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
+Object(_components_rechargeCard_js__WEBPACK_IMPORTED_MODULE_4__["default"])();
 
 /***/ }),
 
@@ -10810,6 +10813,116 @@ function get_date() {
       time.html(data.hour + ":" + data.minute);
     }
   });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/rechargeCard.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/rechargeCard.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  if ($('.recharge_card').length > 0) {
+    fetchData();
+    $('.submit').on('click', submitForm);
+  }
+});
+
+function fetchData() {
+  $('.recharge_card .card_reading .card_reading-btn').on('click', function () {
+    fetchUID();
+  });
+}
+
+function fetchUID() {
+  $.ajax({
+    url: '/ajax_command',
+    type: 'POST',
+    data: {
+      'command': "#NEWCARD"
+    },
+    success: function success(_data, $status) {
+      var $data = JSON.parse(_data);
+
+      if ($data.result == "NOT DETECTED.") {
+        alert('کارت خوانده نشد دوباره تلاش کنید.');
+        return false;
+      } else {
+        return extractData($data);
+      }
+    }
+  });
+}
+
+function extractData($data) {
+  var $uid = $data.result.substr(3);
+
+  var _form = $(".recharge_card .action-panel form");
+
+  _form.find('.uid_set').val('1');
+
+  _form.find('.uid').val($uid);
+
+  $.ajax({
+    url: '/get_card_info',
+    type: 'POST',
+    data: {
+      'uid': $uid
+    },
+    success: function success(_data, $status) {
+      var $data = JSON.parse(_data);
+
+      if ($data.result == 'error') {
+        alert('کارت نا معتبر است');
+      } else if ($data.result == 'ok') {
+        $('.recharge_card .info-panel .name').html($data.data.member.name);
+        $('.recharge_card .info-panel .lastname').html($data.data.member.lastname);
+        $('.recharge_card .info-panel .address').html($data.data.member.address);
+        $('.recharge_card .info-panel .national_code').html($data.data.member.national_code);
+        $('.recharge_card .info-panel .telephone').html($data.data.member.telephone);
+        $('.recharge_card .info-panel .mobile_number').html($data.data.member.mobile_number); // displaying plan area
+
+        $('.recharge_card .action-panel').addClass('active');
+      }
+    }
+  });
+}
+
+function submitForm(e) {
+  var _form = $(".recharge_card .action-panel form");
+
+  e.stopPropagation();
+  e.preventDefault();
+
+  if (_form.find('uid_set').val() == '0') {
+    alert('کارت به درستی خوانده شده است');
+    return;
+  }
+
+  $.ajax({
+    url: '/recharge_card',
+    type: 'POST',
+    data: _form.serialize(),
+    success: function success(_data, $status) {
+      var $data = JSON.parse(_data);
+
+      if ($data.result == 'ok') {
+        alert('کارت با موفقیت تمدید شد');
+        window.location = '/';
+      } else if ($data.result == 'active_plan') {
+        alert('کاربر مورد نظر دارای اعتبار است و نیازی به تمدید نیست');
+      } else {
+        alert('خطایی رخ داد. دوباره تلاش کنید.');
+      }
+    }
+  });
+  return false;
 }
 
 /***/ }),
@@ -10960,6 +11073,8 @@ function cardReadingEvent($elem) {
 }
 
 function carReadingSuccess($elem, $data) {
+  $elem.unbind('click');
+
   var _form = $('.register_new form');
 
   var $uid = $data.result.substr(3);
@@ -10976,8 +11091,17 @@ function sendAjax($form) {
     type: 'POST',
     data: $form.serialize(),
     success: function success(_data, $status) {
-      var $data = JSON.parse(_data);
-      console.log($data);
+      if (_data.result == 'ok') {
+        alert('ثبت نام به موفقیت انجام شد. در حال مراجعه به بخش خرید اعتبار...');
+        setTimeout(function () {
+          window.location = "http://localhost/recharge_card";
+        }, 1000);
+      } else {
+        alert('کارت خوانده شده تکراری است. از کارت دیگری استفاده کنید.');
+        setTimeout(function () {
+          window.location = "http://localhost";
+        }, 1000);
+      }
     }
   });
 }

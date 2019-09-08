@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use \Morilog\Jalali\Jalalian;
+use \Carbon\Carbon;
+use \App\Traits\CardCreatorTrait;
 
 class RecordController extends Controller
 {
     public function index(){
+
         $this->execPython();
         
         if ( !$this->isMasterSet() ){
@@ -16,12 +19,114 @@ class RecordController extends Controller
         return view('home');
     }
 
+    public function recharge_card(){
+
+        if ( request()->has('uid') ){
+            $uid = request()->get('uid');
+            $plan_id = request()->get('plan');
+            $plan = \App\Plan::find($plan_id);
+            $plan_period = $plan->period;
+            $card = CardCreatorTrait::getCard($uid);
+
+            $active_plan = $this->checkForActivePlan($card->member);
+            
+            if ($active_plan){
+                return collect([
+                    'result' => 'active_plan'
+                ])->toJson();
+            }
+
+            $data = [
+                'member_id' => $card->member->id,
+                'admin_id' => 1,
+                'plan_id' => $plan_id,
+                'start_at' => Carbon::now(),
+                'finished_at' => Carbon::now()->add($plan_period, 'day')
+            ];
+
+            $ret = \App\MemberPlan::create($data);
+
+            if ($ret ){
+                return collect([
+                    'result' => 'ok',
+                    'data' => [
+                        'card' => $card,
+                        'member' => $card->member,
+                    ]
+                ])->toJson();
+            }
+        }
+
+
+
+        return collect([
+            'result' => 'error'
+        ])->toJson();
+    }
+
+    public function recharge_card_page(){
+        $plans = \App\Plan::all();
+        return view('recharge_card',['plans'=>$plans]);
+    }
+
     public function register_new_page(){
+
         return view("register_new");
     }
 
+    
+
+    public function get_card_info(){
+
+        if ( request()->has('uid') ){
+            $uid = request()->get('uid');
+            $card = CardCreatorTrait::getCard($uid);
+            return collect([
+                'result' => 'ok',
+                'data' => [
+                    'card' => $card,
+                    'member' => $card->member
+                ]
+            ])->toJson();
+        }
+
+        return collect([
+            'result' => 'error'
+        ])->toJson();
+        
+    }
+
     public function register_new(){
-        return 'done.';
+
+        $card = [
+            'uid' => request()->get('uid'),
+            'registered_at' => Carbon::now(),
+            'type' => 'user'
+        ];
+        $c = CardCreatorTrait::createCard($card);
+        if ($c != null ){
+            $member = [
+                'name' => strtoupper( request()->get('user_name') ),
+                'lastname' => strtoupper( request()->get('user_lastname') ),
+                'national_code' => request()->get('user_national_code'),
+                'telephone' => request()->get('user_telephone'),
+                'mobile_number' => request()->get('user_mobile_number'),
+                'address' => request()->get('user_address'),
+                'card_id' => $c->id
+            ];
+            $m = \App\Member::create($member);
+            return collect([
+                'result' => 'ok',
+                'data' => [
+                    'member' => $m,
+                    'card' => $c
+                ]
+            ]);
+        }
+        
+        return collect([
+            'result' => 'error'
+        ]);
     }
     
     
@@ -178,6 +283,11 @@ class RecordController extends Controller
         }
         socket_close($socket);
         return 'NOT DETECTED.';
+    }
+
+    private function checkForActivePlan($member){
+        $plan = \App\MemberPlan::where('member_id', $member->id)->where('finished_at', '>' , Carbon::now() );
+        return $plan->count();
     }
             
 }

@@ -128,6 +128,7 @@ function cardReadingEvent($elem){
 }
 
 function carReadingSuccess($elem,$data){
+    $elem.unbind('click');
     var _form = $('.register_new form');
     var $uid = $data.result.substr(3);
     $elem.addClass('set').html('کارت خوانده شد.')
@@ -141,8 +142,18 @@ function sendAjax($form){
             type : 'POST',
             data: $form.serialize(),
             success: function(_data, $status){
-                var $data = JSON.parse(_data);
-                console.log($data);
+                if ( _data.result == 'ok'){
+                    alert('ثبت نام به موفقیت انجام شد. در حال مراجعه به بخش خرید اعتبار...');
+                    setTimeout(function(){
+                        window.location = "http://localhost/recharge_card";
+                    },1000);
+                }
+                else{
+                    alert('کارت خوانده شده تکراری است. از کارت دیگری استفاده کنید.');
+                    setTimeout(function(){
+                        window.location = "http://localhost";
+                    },1000);
+                }
             }
     })
 }

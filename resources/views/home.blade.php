@@ -29,7 +29,7 @@
             <a class="register-btn" href="/register_new">
                 ثبت نام جديد
             </a>
-            <a class="recharge-btn" href="/recharge">
+            <a class="recharge-btn" href="/recharge_card">
                 تمديد اشتراک
             </a>
             <a class="list-users" href="/manage_users">
