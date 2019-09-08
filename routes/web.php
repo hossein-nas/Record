@@ -13,8 +13,9 @@
 
 Route::get('/', 'RecordController@index');
 Route::get('/get_info', 'RecordController@get_info');
-Route::get('/register_new', 'RecordController@register_new');
-Route::get('/register_new', 'RecordController@register_new');
+Route::get('/register_new', 'RecordController@register_new_page');
+Route::post('/register_new', 'RecordController@register_new');
+Route::get('/recharge_card', 'RecordController@recharge_card');
 
 Route::post('/get_info', 'RecordController@get_info');
 Route::post('/ajax_command', 'RecordController@ajaxCommand');

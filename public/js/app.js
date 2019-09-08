@@ -10708,7 +10708,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/getInfo.js */ "./resources/js/components/getInfo.js");
 /* harmony import */ var _components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/sendcommand.js */ "./resources/js/components/sendcommand.js");
 /* harmony import */ var _components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/getCabinetInfo.js */ "./resources/js/components/getCabinetInfo.js");
+/* harmony import */ var _components_registerNew_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/registerNew.js */ "./resources/js/components/registerNew.js");
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // alert("Hi there :)");
+
 
 
 
@@ -10716,6 +10718,7 @@ window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jqu
 Object(_components_getInfo_js__WEBPACK_IMPORTED_MODULE_0__["default"])();
 Object(_components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 Object(_components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
+Object(_components_registerNew_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
 
 /***/ }),
 
@@ -10755,7 +10758,6 @@ function manageHTML($data) {
   var cabinets_div = $('.cabinets');
   var updated_nodes = $("<div class='row'>");
   $data.map(function (_data, _in) {
-    console.log(_in);
     var section = $("<section>").addClass('cabinet');
 
     if (_data.status == 1) {
@@ -10806,6 +10808,176 @@ function get_date() {
       weakday_name.html(data.weakday_name);
       date.html(data.date);
       time.html(data.hour + ":" + data.minute);
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/registerNew.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/registerNew.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  if ($('.register_new').length > 0) {
+    var register_new_div = $('.register_new');
+
+    var _form = register_new_div.find('form');
+
+    _form.on('submit', submitEvent);
+
+    cardReadingEvent(_form.find('.card-reading'));
+  }
+});
+
+function submitEvent(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  var noError = true;
+
+  var _form = $('.register_new form');
+
+  noError &= checkforName(_form.find('.user_name'));
+  noError &= checkforName(_form.find('.user_lastname'));
+  noError &= checkforNationalCode(_form.find('.user_national_code'));
+  noError &= checkforTelephone(_form.find('.user_telephone'));
+  noError &= checkforMobileNumber(_form.find('.user_mobile_number'));
+  noError &= _form.find('.uid_set').val();
+
+  if (noError) {
+    sendAjax(_form);
+    return true;
+  }
+
+  return false;
+}
+
+function checkforName($elem) {
+  var $name = $elem.val();
+
+  if ($name.length === 0) {
+    $elem.css('border', '1px solid red');
+    return false;
+  }
+
+  var regex = /[A-Za-z 0-9]{4,}/i;
+  var ret = regex.test($name);
+
+  if (ret == false) {
+    $elem.css('border', '1px solid red');
+  } else {
+    $elem.removeAttr('style');
+  }
+
+  return ret;
+}
+
+function checkforNationalCode($elem) {
+  var $name = $elem.val();
+
+  if ($name.length === 0) {
+    $elem.css('border', '1px solid red');
+    return false;
+  }
+
+  var regex = /[0-9]{10,10}/i;
+  var ret = regex.test($name);
+
+  if (ret == false) {
+    $elem.css('border', '1px solid red');
+  } else {
+    $elem.removeAttr('style');
+  }
+
+  return ret;
+}
+
+function checkforTelephone($elem) {
+  var $name = $elem.val();
+
+  if ($name.length === 0) {
+    $elem.css('border', '1px solid red');
+    return false;
+  }
+
+  var regex = /[0-9]{8,8}/i;
+  var ret = regex.test($name);
+
+  if (ret == false) {
+    $elem.css('border', '1px solid red');
+  } else {
+    $elem.removeAttr('style');
+  }
+
+  return ret;
+}
+
+function checkforMobileNumber($elem) {
+  var $name = $elem.val();
+
+  if ($name.length === 0) {
+    $elem.css('border', '1px solid red');
+    return false;
+  }
+
+  var regex = /09[0-9]{9,9}/i;
+  var ret = regex.test($name);
+
+  if (ret == false) {
+    $elem.css('border', '1px solid red');
+  } else {
+    $elem.removeAttr('style');
+  }
+
+  return ret;
+}
+
+function cardReadingEvent($elem) {
+  $elem.on('click', function () {
+    $.ajax({
+      url: '/ajax_command',
+      type: 'POST',
+      data: {
+        'command': "#NEWCARD"
+      },
+      success: function success(_data, $status) {
+        var $data = JSON.parse(_data);
+
+        if ($data.result == "NOT DETECTED.") {
+          alert('کارت خوانده نشد دوباره تلاش کنید.');
+        } else {
+          carReadingSuccess($elem, $data);
+        }
+      }
+    });
+  });
+}
+
+function carReadingSuccess($elem, $data) {
+  var _form = $('.register_new form');
+
+  var $uid = $data.result.substr(3);
+  $elem.addClass('set').html('کارت خوانده شد.');
+
+  _form.find('.uid_set').val(1);
+
+  _form.find('.uid').val($uid);
+}
+
+function sendAjax($form) {
+  $.ajax({
+    url: '/register_new',
+    type: 'POST',
+    data: $form.serialize(),
+    success: function success(_data, $status) {
+      var $data = JSON.parse(_data);
+      console.log($data);
     }
   });
 }

@@ -3,6 +3,8 @@ window.$ = window.jQuery = require('jquery');
 import notify from "./components/getInfo.js";
 import sendcommand from "./components/sendcommand.js";
 import getCabintInfo from "./components/getCabinetInfo.js";
+import registerNew from "./components/registerNew.js";
 notify();
 sendcommand();
 getCabintInfo();
+registerNew();

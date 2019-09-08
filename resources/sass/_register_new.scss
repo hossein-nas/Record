@@ -7,6 +7,17 @@
         text-align: center;
         color:#507a9a;
         margin-bottom: 20px;
+        a.back{
+            display: block;
+            float: left;
+            font-size: .9rem;
+            color: #777;
+            padding: 10px 10px 15px 10px;
+            margin-top: -5px;
+            &:hover, &:active{
+                background-color: #bbb;
+            }
+        }
     }
     form{
         .textgroup{
@@ -57,18 +68,45 @@
                 height:100px
             }
         }
-
-        .submit{
+        .actionarea{
             float: left;
-            background-color: #4c904c;
-            padding:10px 15px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color:white;
-            border-radius:8px;
-            border:none;
-            min-width: 100px;;
+            width: 320px;
+            @extend %clearfix;
+            .card-reading{
+                float: right;
+                width: 150px;
+                background-color: #ddd;
+                color: #666;
+                margin-right: 15px;
+                text-align: center;
+                padding: 10px 0 0 0 ;
+                height:43px;
+                border-radius:8px;
+                @extend %no-select;
+                &.set{
+                    background-color: #65c1c1;
+                    color:white;
+                }
+                &:active{
+                    background-color: #bbb;
+                    cursor: pointer;
 
+                }
+            }
+            .submit{
+                float: left;
+                background-color: #4c904c;
+                padding:10px 15px;
+                font-size: 1.2rem;
+                font-weight: bold;
+                color:white;
+                border-radius:8px;
+                border:none;
+                min-width: 100px;;
+                @extend %no-select;
+    
+            }
         }
+        
     }
 }

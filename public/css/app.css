@@ -18,6 +18,7 @@ body {
   font-size: 16px;
 }
 
+.register_new form .actionarea::after,
 .register_new form .textareagroup::after,
 .register_new form .textgroup::after,
 .container .cabinets .row::after,
@@ -27,6 +28,8 @@ body {
   display: table;
 }
 
+.register_new form .actionarea .submit,
+.register_new form .actionarea .card-reading,
 .container .cabinets,
 .container .main-section .info-panel,
 .container .main-section .action-panel .list-users,
@@ -252,6 +255,20 @@ body {
   margin-bottom: 20px;
 }
 
+.register_new .header a.back {
+  display: block;
+  float: left;
+  font-size: 0.9rem;
+  color: #777;
+  padding: 10px 10px 15px 10px;
+  margin-top: -5px;
+}
+
+.register_new .header a.back:hover,
+.register_new .header a.back:active {
+  background-color: #bbb;
+}
+
 .register_new form .textgroup {
   display: block;
   float: right;
@@ -304,7 +321,34 @@ body {
   height: 100px;
 }
 
-.register_new form .submit {
+.register_new form .actionarea {
+  float: left;
+  width: 320px;
+}
+
+.register_new form .actionarea .card-reading {
+  float: right;
+  width: 150px;
+  background-color: #ddd;
+  color: #666;
+  margin-right: 15px;
+  text-align: center;
+  padding: 10px 0 0 0;
+  height: 43px;
+  border-radius: 8px;
+}
+
+.register_new form .actionarea .card-reading.set {
+  background-color: #65c1c1;
+  color: white;
+}
+
+.register_new form .actionarea .card-reading:active {
+  background-color: #bbb;
+  cursor: pointer;
+}
+
+.register_new form .actionarea .submit {
   float: left;
   background-color: #4c904c;
   padding: 10px 15px;

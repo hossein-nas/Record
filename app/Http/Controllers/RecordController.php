@@ -16,8 +16,12 @@ class RecordController extends Controller
         return view('home');
     }
 
-    public function register_new(){
+    public function register_new_page(){
         return view("register_new");
+    }
+
+    public function register_new(){
+        return 'done.';
     }
     
     
@@ -44,7 +48,10 @@ class RecordController extends Controller
         if ( request()->has('command') ){
             $command = request()->get('command');
             $ret = $this->sendCommand($command);
-            return $ret;
+            $result = [
+                'result' => $ret
+            ];
+            return json_encode($result);
         }
         return 'error.';
     }
@@ -170,7 +177,7 @@ class RecordController extends Controller
             }
         }
         socket_close($socket);
-        return 'NO RESULT.';
+        return 'NOT DETECTED.';
     }
             
 }

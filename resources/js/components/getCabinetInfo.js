@@ -29,7 +29,6 @@ function manageHTML($data){
     var cabinets_div = $('.cabinets');
     var updated_nodes = $("<div class='row'>");
     $data.map(function(_data, _in){
-        console.log(_in);
         var section  = $("<section>").addClass('cabinet');
         if ( _data.status ==1 ){
             section.append( $("<label for='number'>").addClass('active').html(_data.cabinet_no));
