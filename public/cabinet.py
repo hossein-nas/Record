@@ -7,7 +7,7 @@ import socket
 
 ip_address = "127.0.0.1"
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-ser = serial.Serial('/dev/ttyUSB0',baudrate=115200,timeout=2)
+ser = serial.Serial('/dev/Arduino2',baudrate=115200,timeout=2)
 s.bind( (ip_address, 4321) )
 s.listen(5)
 print (f"socket has been establish on " + ip_address)

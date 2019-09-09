@@ -8,7 +8,7 @@ import requests
 
 ip_address = "127.0.0.1"
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-ser = serial.Serial('/dev/ttyACM0',baudrate=115200,timeout=2)
+ser = serial.Serial('/dev/Arduino1',baudrate=115200,timeout=2)
 s.bind( (ip_address, 1234) )
 s.listen(5)
 print (f"socket has been establish on " + ip_address)
