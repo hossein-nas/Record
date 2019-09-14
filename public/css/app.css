@@ -459,6 +459,10 @@ body {
   content: "\62A\644\641\646   \62B\627\628\62A   :";
 }
 
+.recharge_card .info-panel span.remain_days::before {
+  content: "\628\627\642\6CC   \645\627\646\62F\647   :";
+}
+
 .recharge_card .action-panel {
   display: none;
 }
@@ -476,7 +480,7 @@ body {
   font-size: 1.1rem;
   text-align: center;
   height: 40px;
-  margin-bottom: 115px;
+  margin-bottom: 30px;
 }
 
 .recharge_card .action-panel.active .submit {
@@ -484,5 +488,14 @@ body {
   width: 150px;
   border: none;
   background-color: #388e53;
+}
+
+.recharge_card .action-panel.active .today {
+  padding: 5px 10px;
+  width: 200px;
+  font-size: 1.3rem;
+  text-align: center;
+  height: 40px;
+  margin-bottom: 50px;
 }
 

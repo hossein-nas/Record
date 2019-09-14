@@ -36,12 +36,17 @@ class RecordController extends Controller
                 ])->toJson();
             }
 
+            $_start_at = request()->get('start_at');
+            $_start_at_timestamp = \Morilog\Jalali\Jalalian::fromFormat('Y/n/j', $_start_at)->getTimestamp();
+            $start_at = Carbon::createFromTimestamp($_start_at_timestamp);
+
+
             $data = [
                 'member_id' => $card->member->id,
                 'admin_id' => 1,
                 'plan_id' => $plan_id,
-                'start_at' => Carbon::now(),
-                'finished_at' => Carbon::now()->add($plan_period, 'day')
+                'start_at' => $start_at->toDateTimeString(),
+                'finished_at' => $start_at->add($plan_period, 'day')->toDateTimeString()
             ];
 
             $ret = \App\MemberPlan::create($data);
@@ -66,7 +71,8 @@ class RecordController extends Controller
 
     public function recharge_card_page(){
         $plans = \App\Plan::all();
-        return view('recharge_card',['plans'=>$plans]);
+        $today = Jalalian::now()->format('Y/n/j');
+        return view('recharge_card',['plans'=>$plans, 'today' => $today]);
     }
 
     public function register_new_page(){
@@ -81,11 +87,14 @@ class RecordController extends Controller
         if ( request()->has('uid') ){
             $uid = request()->get('uid');
             $card = CardCreatorTrait::getCard($uid);
+            $finished_at = $card->member->plan->last()->pivot->finished_at;
+            $remaining_days = \Carbon\Carbon::now()->DiffInDays($finished_at,false);
             return collect([
                 'result' => 'ok',
                 'data' => [
                     'card' => $card,
-                    'member' => $card->member
+                    'member' => $card->member,
+                    'remaining_days' => $remaining_days
                 ]
             ])->toJson();
         }
@@ -208,7 +217,9 @@ class RecordController extends Controller
                     $command = "#ENTRY[";
                     $command .= strtoupper($member->lastname);
                     $command .= "-".$cabinet->id."]";
+                    $cabinet_command = "#CABINET" . $cabinet->cabinet_no-1;
                     $this->sendCommand($command);
+                    $this->sendCabinet($cabinet_command);
                 }
                 else{
                     $ret = \App\Workout::where('member_id', $member->id)->get()->last();
@@ -221,7 +232,9 @@ class RecordController extends Controller
                         'action' => 'exit',
                         'action_at' => \Carbon\Carbon::now()
                         ]);
-                        $this->sendCommand("#EXIT[".$cabinet->id."]");
+                    $this->sendCommand("#EXIT[".$cabinet->id."]");
+                    $cabinet_command = "#CABINET" . $cabinet->cabinet_no-1;
+                    $this->sendCabinet($cabinet_command);
                 }
                         
                         
@@ -283,6 +296,26 @@ class RecordController extends Controller
         }
         socket_close($socket);
         return 'NOT DETECTED.';
+    }
+
+    private function sendCabinet($cabinet){
+        $host    = "127.0.0.1";
+        $port    = 4321;
+        $message = "ready?". "\n";
+        // create socket
+        $socket = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
+        // connect to server
+        $result = socket_connect($socket, $host, $port) or die("Could not connect to server\n");  
+        // send string to server
+        socket_write($socket, $message, strlen($message)) or die("Could not send data to server\n");
+        // get server response
+        $result = socket_read ($socket, 1024) or die("Could not read server response\n");
+        if ( trim($result) == 'ready'){
+            $message = $cabinet;
+            socket_write($socket, $message, strlen($message)) or die("Could not send data to server\n");
+        }
+        socket_close($socket);
+        return 'DONE.';
     }
 
     private function checkForActivePlan($member){
