@@ -12,7 +12,7 @@ class Cabinet extends Model
     ];
 
     public $timestamps = false;
-    private $cabinet_counts = 16;
+    private $cabinet_counts = 12;
 
     public function getCabinetCounts(){
         return $this->cabinet_counts;

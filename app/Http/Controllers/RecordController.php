@@ -87,8 +87,15 @@ class RecordController extends Controller
         if ( request()->has('uid') ){
             $uid = request()->get('uid');
             $card = CardCreatorTrait::getCard($uid);
-            $finished_at = $card->member->plan->last()->pivot->finished_at;
-            $remaining_days = \Carbon\Carbon::now()->DiffInDays($finished_at,false);
+	    if ( $card-> member->plan->count() ){
+            	$finished_at = $card->member->plan->last()->pivot->finished_at;
+            	$remaining_days = \Carbon\Carbon::now()->DiffInDays($finished_at,false);
+	    }
+	    else{
+		    $remaining_days = 0;
+
+	    }
+	    
             return collect([
                 'result' => 'ok',
                 'data' => [
@@ -190,6 +197,13 @@ class RecordController extends Controller
                 }
                 
                 $finished_at = $member->plan->last()->pivot->finished_at;
+		$remaining_days = \Carbon\Carbon::now()->DiffInHours($finished_at, false);
+                if ($remaining_days <= 0 ){
+                    $this->sendCommand("#NOCHARGE[".strtoupper($member->lastname)."]");
+                    return;
+                }
+
+
                 
                 // check for last login/logout
                 $action = 'entry';
@@ -214,10 +228,15 @@ class RecordController extends Controller
                         'action' => 'entry',
                         'action_at' => \Carbon\Carbon::now()
                         ]);
+		    $member_name = $member->lastname; 
+		    if ( strlen($member_name) > 12 ){
+			    $member_name = substr($member_name, 0 , 11);
+		    }
                     $command = "#ENTRY[";
-                    $command .= strtoupper($member->lastname);
+                    $command .= strtoupper($member_name);
                     $command .= "-".$cabinet->id."]";
-                    $cabinet_command = "#CABINET" . $cabinet->cabinet_no-1;
+		    $cabinet_no = $cabinet->cabinet_no - 1;
+                    $cabinet_command = "#CABINET" . $cabinet_no;
                     $this->sendCommand($command);
                     $this->sendCabinet($cabinet_command);
                 }
@@ -233,7 +252,8 @@ class RecordController extends Controller
                         'action_at' => \Carbon\Carbon::now()
                         ]);
                     $this->sendCommand("#EXIT[".$cabinet->id."]");
-                    $cabinet_command = "#CABINET" . $cabinet->cabinet_no-1;
+		    $cabinet_no = $cabinet->cabinet_no - 1;
+                    $cabinet_command = "#CABINET" . $cabinet_no;
                     $this->sendCabinet($cabinet_command);
                 }
                         

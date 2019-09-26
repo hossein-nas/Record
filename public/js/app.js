@@ -10881,7 +10881,7 @@ function extractData($data) {
       if ($data.result == 'error') {
         alert('کارت نا معتبر است');
       } else if ($data.result == 'ok') {
-        var name = $data.data.member.name + " " + $data.data.member.name;
+        var name = $data.data.member.name + " " + $data.data.member.lastname;
         $('.recharge_card .info-panel .name').html(name);
         $('.recharge_card .info-panel .address').html($data.data.member.address);
         $('.recharge_card .info-panel .national_code').html($data.data.member.national_code);
