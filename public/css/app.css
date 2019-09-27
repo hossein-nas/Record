@@ -18,6 +18,7 @@ body {
   font-size: 16px;
 }
 
+.cabinet-status::after,
 .recharge_card::after,
 .register_new form .actionarea::after,
 .register_new form .textareagroup::after,
@@ -497,5 +498,96 @@ body {
   text-align: center;
   height: 40px;
   margin-bottom: 50px;
+}
+
+.cabinet-status .header {
+  position: relative;
+  background-color: #dfdfdf;
+  padding: 5px 0 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #507a9a;
+  margin-bottom: 10px;
+}
+
+.cabinet-status .header a.back {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.9rem;
+  color: #777;
+  padding: 10px 10px 15px 10px;
+}
+
+.cabinet-status .header a.back:hover,
+.cabinet-status .header a.back:active {
+  background-color: #bbb;
+}
+
+.cabinet-status .body h3.title {
+  background-color: #e8e8e8;
+  text-align: center;
+  font-size: 1.3rem;
+  margin-top: -10px;
+  padding: 10px 0 10px 0;
+  color: #b70b0b;
+  border-bottom: 2px solid #aaa;
+  margin-bottom: 30px;
+}
+
+.cabinet-status .body .info .info-line {
+  margin-bottom: 1px;
+  font-size: 1.3rem;
+  padding: 4px 4px 4px 0;
+  color: #515163;
+}
+
+.cabinet-status .body .info .info-line label {
+  display: inline-block;
+  padding: 5px 15px 5px 15px;
+  font-size: 1rem;
+  color: #777;
+  background-color: #fff;
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.cabinet-status .body .info .id {
+  background-color: #c8e8cf;
+}
+
+.cabinet-status .body .info .name {
+  background-color: #b6eeff;
+}
+
+.cabinet-status .body .info .entry {
+  background-color: #feffb6;
+}
+
+.cabinet-status .body .form {
+  margin-top: 45px;
+}
+
+.cabinet-status .body .form form {
+  text-align: center;
+}
+
+.cabinet-status .body .form form input[type=submit] {
+  display: inline-block;
+  background-color: #b34949;
+  border: none;
+  width: 180px;
+  height: 45px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.cabinet-status .body .form form input[type=submit]:active {
+  opacity: 0.7;
+  cursor: pointer;
 }
 

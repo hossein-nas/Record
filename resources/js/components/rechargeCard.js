@@ -13,7 +13,7 @@ function fetchData(){
     $('.recharge_card .card_reading .card_reading-btn').on('click', function(){
         fetchUID();
     })
-   
+
 }
 
 function fetchUID(){
@@ -32,7 +32,7 @@ function fetchUID(){
             else{
                 return extractData($data);
             }
-            
+
         }
     })
 }
@@ -54,14 +54,14 @@ function extractData($data){
                 alert('کارت نا معتبر است');
             }
             else if ( $data.result == 'ok'){
-                var name = $data.data.member.name + " " + $data.data.member.name;
+                var name = $data.data.member.name + " " + $data.data.member.lastname;
                 $('.recharge_card .info-panel .name').html(name);
                 $('.recharge_card .info-panel .address').html($data.data.member.address);
                 $('.recharge_card .info-panel .national_code').html($data.data.member.national_code);
                 $('.recharge_card .info-panel .telephone').html($data.data.member.telephone);
                 $('.recharge_card .info-panel .mobile_number').html($data.data.member.mobile_number);
                 $('.recharge_card .info-panel .remain_days').html($data.data.remaining_days);
-                
+
                 // displaying plan area
                 $('.recharge_card .action-panel').addClass('active');
             }

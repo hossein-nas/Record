@@ -31,11 +31,14 @@ Route::post('/cabinet_info', 'RecordController@get_cabinet_info');
 
 
 
+Route::get('/info/cabinet/{cabinet_id}', 'RecordController@cabinet_status');
+Route::post('/action/cabinet/{id}/empty', 'RecordController@cabinet_empty');
+
 
 /*
 
 Route::get('/', function () {
-	
+
 	if (request()->has('komod') ){
 		$komod = request()->get('komod');
 		$host    = "127.0.0.1";
@@ -44,7 +47,7 @@ Route::get('/', function () {
 		// create socket
 		$socket = socket_create(AF_INET, SOCK_STREAM, 0) or die("Could not create socket\n");
 		// connect to server
-		$result = socket_connect($socket, $host, $port) or die("Could not connect to server\n");  
+		$result = socket_connect($socket, $host, $port) or die("Could not connect to server\n");
 		// send string to server
 		socket_write($socket, $message, strlen($message)) or die("Could not send data to server\n");
 		// get server response

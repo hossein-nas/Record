@@ -1,0 +1,89 @@
+.cabinet-status{
+    @extend %clearfix;
+    .header{
+        position: relative;
+        background-color: #dfdfdf;
+        padding: 5px 0 15px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        color:#507a9a;
+        margin-bottom: 10px;
+        a.back{
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: .9rem;
+            color: #777;
+            padding: 10px 10px 15px 10px;
+            &:hover, &:active{
+                background-color: #bbb;
+            }
+        }
+    }
+    .body{
+        h3.title{
+            background-color: #e8e8e8;
+            text-align: center;
+            font-size: 1.3rem;
+            margin-top: -10px;
+            padding: 10px 0 10px 0;
+            color: #b70b0b;
+            border-bottom: 2px solid #aaa;
+            margin-bottom: 30px;
+        }
+
+        .info{
+            .info-line{
+                label{
+                    display: inline-block;
+                    padding:5px 15px 5px 15px;
+                    font-size: 1rem;
+                    color: #777;
+                    background-color: #fff;
+                    border-radius: 0 .5rem .5rem 0 ;
+                }
+
+                margin-bottom: 1px;
+                font-size: 1.3rem;
+                padding: 4px 4px 4px 0 ;
+                color: #515163;
+            }
+            .id{
+                background-color: #c8e8cf;
+            }
+            .name{
+                background-color: #b6eeff;
+            }
+            .entry{
+                background-color: #feffb6;
+            }
+
+        }
+
+        .form{
+            margin-top: 45px;
+            form{
+                text-align: center;
+                input[type="submit"]{
+                    display: inline-block;
+                    background-color: #b34949;
+                    border: none;
+                    width: 180px;
+                    height:45px;
+                    border-radius:8px;
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                    color: white;
+                    text-align: center;
+                    &:active{
+                        opacity: .7;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+
+}

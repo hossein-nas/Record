@@ -31,7 +31,11 @@ function manageHTML($data){
     $data.map(function(_data, _in){
         var section  = $("<section>").addClass('cabinet');
         if ( _data.status ==1 ){
-            section.append( $("<label for='number'>").addClass('active').html(_data.cabinet_no));
+            var elem = $("<label for='number'>").addClass('active').html(_data.cabinet_no);
+            section.append( elem );
+            section.click(function(){
+                window.location.href = '/info/cabinet/' + _data.cabinet_no;
+            })
         }
         else{
             section.append( $("<label for='number'>").html(_data.cabinet_no));
