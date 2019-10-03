@@ -33,13 +33,17 @@ function manageHTML($data){
         if ( _data.status ==1 ){
             var elem = $("<label for='number'>").addClass('active').html(_data.cabinet_no);
             section.append( elem );
-            section.click(function(){
-                window.location.href = '/info/cabinet/' + _data.cabinet_no;
-            })
+            
         }
         else{
             section.append( $("<label for='number'>").html(_data.cabinet_no));
         }
+
+        // adding event onClick to cabinet
+        section.click(function(){
+            window.location.href = '/info/cabinet/' + _data.cabinet_no;
+        })
+
         updated_nodes.append(section);
     })
     cabinets_div.html(updated_nodes);

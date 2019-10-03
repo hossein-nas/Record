@@ -32,7 +32,7 @@
             <a class="recharge-btn" href="/recharge_card">
                 تمديد اشتراک
             </a>
-            <a class="list-users" href="/manage_users">
+            <a class="list-users" href="/manage/users">
                 مشاهده کاربران
             </a>
 

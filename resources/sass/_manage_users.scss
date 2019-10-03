@@ -1,0 +1,198 @@
+.manage-users {
+  @extend %clearfix;
+  .header {
+    position: relative;
+    background-color: #dfdfdf;
+    padding: 5px 0 15px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    color: #507a9a;
+    margin-bottom: 10px;
+    a.back {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 0.9rem;
+      color: #777;
+      padding: 10px 10px 15px 10px;
+      &:hover,
+      &:active {
+        background-color: #bbb;
+      }
+    }
+  }
+  .body {
+    .search-area {
+      @extend %clearfix;
+      .input-area {
+        @extend %clearfix;
+        float: right;
+        width: 80%;
+        height: 40px;
+        margin-bottom: 5px;
+        .input-group {
+          float: right;
+          > label {
+            color: #777;
+            display: inline-block;
+            margin-left: 5px;
+            line-height: 14px;
+            vertical-align: text-top;
+          }
+          input[type="text"] {
+            height: 38px;
+            border: 1px solid #bbb;
+            padding: 3px 5px 1px 2px;
+            border-radius: 4px;
+            font-size: 1.3rem;
+            width: 125px;
+          }
+          .username {
+            width: 250px !important;
+            margin-left: 15px;
+          }
+        }
+      }
+      .search-btn {
+        @extend %btn;
+        float: left;
+        width: 20%;
+        height: 40px;
+        border-radius: 8px;
+        line-height: 18px;
+        background-color: #78b1a1;
+        font-size: 1.2rem;
+      }
+    }
+    .users-list {
+      @extend %no-select;
+      display: block;
+      border: 2px solid #dcdcdc;
+      margin: 3px;
+      padding: 2px 4px;
+      height: 270px;
+      .user-item {
+        @extend %clearfix;
+        position: relative;
+        height: 33px;
+        border-bottom: 1px solid #bbb;
+        .id {
+          float: right;
+          color: #555;
+          display: inline-block;
+          margin-top: 1px;
+          border-left: 2px solid #ababab;
+          padding-left: 5px;
+          margin-left: 10px;
+          margin-top: 5px;
+          font-size: 1.2rem;
+          width: 60px;
+          text-align: left;
+        }
+        .info {
+          .username {
+            display: inline-block;
+            font-size: 1.3rem;
+            color: #d06377;
+            margin-top: 3px;
+            font-weight: bold;
+          }
+          > div {
+            color: #aaa;
+            display: inline-block;
+            font-size: 0.8rem;
+            top: 6px;
+            position: absolute;
+            margin-right: 5px;
+            .national-code {
+              color: #666;
+              font-weight: bold;
+              font-size: 0.9rem;
+            }
+          }
+          .edit {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 0.8rem;
+            color: #666;
+            padding: 6px 14px;
+            text-decoration: none;
+            margin-top: 2px;
+            &:active {
+              cursor: pointer;
+              background-color: #bbb;
+            }
+          }
+        }
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+    .details{
+        @extend %clearfix;
+        padding-top: 5px;
+        .pagination{
+            padding-right: 10px;
+            float: right;
+            width: 60%;
+            @extend %clearfix;
+            >div {
+                float: right;
+                margin-left: 5px;
+            }
+            .prev, .next{
+                a{
+                    text-align: center;
+                    display: block;
+                    width:65px;
+                    height:30px;
+                    background-color: #aaa;
+                    color:white;
+                    text-decoration:none;
+                    border-radius:4px;
+                    font-size: .95rem;
+                    padding:4px 0px;
+                    &:active{
+                        background-color: darken(#aaa,10);
+                        cursor:pointer;
+                    }
+
+                }
+
+            }
+            .current{
+                line-height:26px;
+                color: #777;
+                margin: 0 10px;
+
+                .current-page{
+                    font-weight:bold;
+                    color:#555;
+
+                }
+
+            }
+            .next{
+
+            }
+
+        }
+        .info{
+            padding-left: 10px;
+            float: right;
+            width: 40%;
+            font-size: .8rem;
+            color:#777;
+            text-align: left;
+            span.all-pages, span.all-members{
+                color:#444;
+                font-weight: bold;
+            }
+        }
+    }
+  }
+}

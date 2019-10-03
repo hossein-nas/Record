@@ -10710,7 +10710,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/getCabinetInfo.js */ "./resources/js/components/getCabinetInfo.js");
 /* harmony import */ var _components_registerNew_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/registerNew.js */ "./resources/js/components/registerNew.js");
 /* harmony import */ var _components_rechargeCard_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/rechargeCard.js */ "./resources/js/components/rechargeCard.js");
+/* harmony import */ var _components_manage_users_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/manage_users.js */ "./resources/js/components/manage_users.js");
 window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"); // alert("Hi there :)");
+
 
 
 
@@ -10722,6 +10724,7 @@ Object(_components_sendcommand_js__WEBPACK_IMPORTED_MODULE_1__["default"])();
 Object(_components_getCabinetInfo_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
 Object(_components_registerNew_js__WEBPACK_IMPORTED_MODULE_3__["default"])();
 Object(_components_rechargeCard_js__WEBPACK_IMPORTED_MODULE_4__["default"])();
+Object(_components_manage_users_js__WEBPACK_IMPORTED_MODULE_5__["default"])();
 
 /***/ }),
 
@@ -10766,13 +10769,14 @@ function manageHTML($data) {
     if (_data.status == 1) {
       var elem = $("<label for='number'>").addClass('active').html(_data.cabinet_no);
       section.append(elem);
-      section.click(function () {
-        window.location.href = '/info/cabinet/' + _data.cabinet_no;
-      });
     } else {
       section.append($("<label for='number'>").html(_data.cabinet_no));
-    }
+    } // adding event onClick to cabinet
 
+
+    section.click(function () {
+      window.location.href = '/info/cabinet/' + _data.cabinet_no;
+    });
     updated_nodes.append(section);
   });
   cabinets_div.html(updated_nodes);
@@ -10821,6 +10825,131 @@ function get_date() {
       registered.html(data.todays_registered);
     }
   });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/manage_users.js":
+/*!*************************************************!*\
+  !*** ./resources/js/components/manage_users.js ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+window.$ = window.jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var $manage_users = $('.manage-users').get();
+
+  if ($manage_users.length > 0) {
+    // this makes sure that we are in manage-user page :)
+    getInitialData();
+  }
+}); // util functions
+
+function getInitialData() {
+  $.ajax({
+    url: '/users/1/page',
+    type: 'POST',
+    success: function success(data, $status) {
+      var $data = JSON.parse(data);
+
+      if ($data.result == 'ok') {
+        manageItemHtml($data.data.all_users);
+        managePagination($data.data);
+      } else {
+        console.log('khata');
+      }
+    }
+  });
+}
+
+function getDataByPage($page) {}
+
+function manageItemHtml($users) {
+  var $len = $users.length;
+  var users_list = $('.manage-users .body .users-list');
+  var new_list = $('');
+  users_list.empty();
+
+  for (var i = 0; i < $len; i++) {
+    var temp = $('<div class="user-item"> \
+    <span class="id"> \
+        #173 \
+    </span> \
+    <div class="info"> \
+        <span class="username">HOSSEIN NASIRI</span> \
+        <div> \
+            (کد ملی: \
+            <span class="national-code">1680174266</span> \
+            ) \
+        </div> \
+        <a href="#" class="edit">مشاهده</a> \
+    </div> \
+</div>');
+    var name = $users[i].name + " " + $users[i].lastname;
+    var national_code = $users[i].national_code;
+    var id = $users[i].id;
+    temp.find('.id').html('#' + id);
+    temp.find('.username').html(name);
+    temp.find('.national-code').html(national_code);
+    temp.find('.edit').attr('href', '/user/' + id + '/info');
+    users_list.append(temp);
+  }
+}
+
+function managePagination($data) {
+  var details_elem = $('.manage-users .body .details');
+  details_elem.empty();
+  var all_users = $data.count;
+  var all_pages = $data.pages;
+  var next_page = $data.next_page;
+  var prev_page = $data.prev_page;
+  var current_page = $data.current_page;
+  var template = $('<div class="pagination"> \
+                    <div class="prev"> \
+                        <a href="#">قبلی</a> \
+                    </div> \
+                    <div class="current"> \
+                        صفحه( \
+                            <span class="current-page">1</span> \
+                        ) \
+                    </div> \
+                    <div class="next"> \
+                        <a href="#">بعدی</a> \
+                    </div> \
+ \
+                </div> \
+                <div class="info"> \
+                    <span> \
+                        کل صفحات ( \
+                            <span class="all-pages">4</span> \
+                        ) \
+                    </span> |  \
+                    <span> \
+                        کل اعضا( \
+                            <span class="all-members">44</span> \
+                        ) \
+                    </span>  \
+                </div>');
+
+  if (prev_page == null) {
+    template.find('.prev').html('');
+  } else {
+    template.find('.prev').html('<a href="/manage/' + prev_page + '/page">قبلی</a>');
+  }
+
+  if (next_page == null) {
+    template.find('.next').html('');
+  } else {
+    template.find('.next').html('<a href="/manage/' + next_page + '/page">قبلی</a>');
+  }
+
+  template.find('.current-page').html(current_page);
+  template.find('.all-members').html(all_users);
+  template.find('.all-pages').html(all_pages);
+  details_elem.html(template);
 }
 
 /***/ }),

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use \Morilog\Jalali\Jalalian;
-use \Carbon\Carbon;
 use \App\Traits\CardCreatorTrait;
+use \Carbon\Carbon;
+use \Morilog\Jalali\Jalalian;
 
 class RecordController extends Controller
 {
@@ -17,6 +17,53 @@ class RecordController extends Controller
             return view('master_set');
         }
         return view('home');
+    }
+
+    public function manage_users()
+    {
+        return view('manage_users');
+    }
+
+    public function get_users_list($page)
+    {
+        // check for numeric and unsigned integer
+        if (is_numeric($page) and $page > 0) {
+            // calculatin start offset from $page
+            $start = ($page - 1) * 8;
+
+            $result = [];
+            $all_users_count = \App\Member::all()->count();
+            $all_pages = (int) ceil($all_users_count / 8.0);
+            $all_users = \App\Member::offset($start)->limit(8)->get();
+            $result = array_merge($result, [
+                'start' => $start,
+                'count' => $all_users_count,
+                'pages' => $all_pages,
+                'curren_page' => $page,
+                'all_users' => $all_users,
+                'current_page_count' => $all_users->count(),
+            ]);
+
+            if ($page >= $all_pages) {
+                $result = array_merge($result, ['next_page' => null]);
+            } else {
+                $result = array_merge($result, ['next_page' => $page + 1]);
+            }
+
+            if ($page == 1 or $page > $all_pages) {
+                $result = array_merge($result, ['prev_page' => null]);
+            } else {
+                $result = array_merge($result, ['prev_page' => $page - 1]);
+            }
+
+
+            return collect([
+                'result' => 'ok',
+                'data' => $result
+            ])->toJson();
+
+        }
+        return collect(['result' => 'error'])->toJson();
     }
 
     public function recharge_card()
@@ -33,7 +80,7 @@ class RecordController extends Controller
 
             if ($active_plan) {
                 return collect([
-                    'result' => 'active_plan'
+                    'result' => 'active_plan',
                 ])->toJson();
             }
 
@@ -41,13 +88,12 @@ class RecordController extends Controller
             $_start_at_timestamp = \Morilog\Jalali\Jalalian::fromFormat('Y/n/j', $_start_at)->getTimestamp();
             $start_at = Carbon::createFromTimestamp($_start_at_timestamp);
 
-
             $data = [
                 'member_id' => $card->member->id,
                 'admin_id' => 1,
                 'plan_id' => $plan_id,
                 'start_at' => $start_at->toDateTimeString(),
-                'finished_at' => $start_at->add($plan_period, 'day')->toDateTimeString()
+                'finished_at' => $start_at->add($plan_period, 'day')->toDateTimeString(),
             ];
 
             $ret = \App\MemberPlan::create($data);
@@ -58,14 +104,13 @@ class RecordController extends Controller
                     'data' => [
                         'card' => $card,
                         'member' => $card->member,
-                    ]
+                    ],
                 ])->toJson();
             }
         }
 
-
         return collect([
-            'result' => 'error'
+            'result' => 'error',
         ])->toJson();
     }
 
@@ -81,7 +126,6 @@ class RecordController extends Controller
 
         return view("register_new");
     }
-
 
     public function get_card_info()
     {
@@ -102,13 +146,13 @@ class RecordController extends Controller
                 'data' => [
                     'card' => $card,
                     'member' => $card->member,
-                    'remaining_days' => $remaining_days
-                ]
+                    'remaining_days' => $remaining_days,
+                ],
             ])->toJson();
         }
 
         return collect([
-            'result' => 'error'
+            'result' => 'error',
         ])->toJson();
 
     }
@@ -119,7 +163,7 @@ class RecordController extends Controller
         $card = [
             'uid' => request()->get('uid'),
             'registered_at' => Carbon::now(),
-            'type' => 'user'
+            'type' => 'user',
         ];
         $c = CardCreatorTrait::createCard($card);
         if ($c != null) {
@@ -130,23 +174,22 @@ class RecordController extends Controller
                 'telephone' => request()->get('user_telephone'),
                 'mobile_number' => request()->get('user_mobile_number'),
                 'address' => request()->get('user_address'),
-                'card_id' => $c->id
+                'card_id' => $c->id,
             ];
             $m = \App\Member::create($member);
             return collect([
                 'result' => 'ok',
                 'data' => [
                     'member' => $m,
-                    'card' => $c
-                ]
+                    'card' => $c,
+                ],
             ]);
         }
 
         return collect([
-            'result' => 'error'
+            'result' => 'error',
         ]);
     }
-
 
     public function get_info()
     {
@@ -159,7 +202,7 @@ class RecordController extends Controller
             "minute" => Jalalian::now()->format('i'),
             "second" => Jalalian::now()->format('s'),
             'todays_workout' => $todays_workout,
-            'todays_registered' => $todays_registered
+            'todays_registered' => $todays_registered,
         );
 
         return $ret;
@@ -175,9 +218,22 @@ class RecordController extends Controller
 
     public function cabinet_status($cabinet_id)
     {
-        $workout = \App\Workout::where('cabinet_id', $cabinet_id)->get()->last();
-        $member = \App\Member::find($workout->member_id);
-        return view('cabinet_status', ['workout' => $workout, 'member' => $member]);
+        $vars = collect([]);
+        $vars->put('cabinet_id', $cabinet_id);
+        $workout = \App\Workout::where('cabinet_id', $cabinet_id)
+            ->where('action_at', '>', Carbon::now()->today())
+            ->get()
+            ->last();
+        if ($workout and $workout->action == "entry") {
+            $member = \App\Member::find($workout->member_id);
+            $vars->put('workout', $workout);
+            $vars->put('member', $member);
+        } else {
+            $vars->put('workout', null);
+            $vars->put('member', null);
+        }
+
+        return view('cabinet_status', ['vars' => $vars]);
     }
 
     public function cabinet_empty($id)
@@ -191,13 +247,24 @@ class RecordController extends Controller
                     'member_id' => $workout->member_id,
                     'cabinet_id' => $workout->cabinet_id,
                     'action' => 'exit',
-                    'action_at' => \Carbon\Carbon::now()
+                    'action_at' => \Carbon\Carbon::now(),
                 ]);
 
-                $cabinet = \App\Cabinet::find((int)$cabinet_id);
+                $cabinet = \App\Cabinet::find((int) $cabinet_id);
                 $cabinet->status = 0;
                 $cabinet->save();
             }
+        }
+        return redirect("/");
+    }
+
+    public function cabinet_open($id)
+    {
+        if (request()->has('cabinet')) {
+            $cabinet_id = request()->get('cabinet');
+            $cabinet_no = (int) $cabinet_id - 1;
+            $cabinet_command = "#CABINET" . $cabinet_no;
+            $this->sendCabinet($cabinet_command);
         }
         return redirect("/");
     }
@@ -208,13 +275,12 @@ class RecordController extends Controller
             $command = request()->get('command');
             $ret = $this->sendCommand($command);
             $result = [
-                'result' => $ret
+                'result' => $ret,
             ];
             return json_encode($result);
         }
         return 'error.';
     }
-
 
     public function cabinetManager()
     {
@@ -235,7 +301,6 @@ class RecordController extends Controller
                     $member_name = substr($member_name, 0, 11);
                 }
 
-
                 if (!$member->plan->count()) {
                     $this->sendCommand("#NOCHARGE[" . strtoupper($member_name) . "]");
                     return;
@@ -248,7 +313,6 @@ class RecordController extends Controller
                     return;
                 }
 
-
                 // check for last login/logout
                 $action = 'entry';
                 $last_login = \App\Workout::where('member_id', $member->id)->get()->last();
@@ -260,7 +324,6 @@ class RecordController extends Controller
                     $action = 'entry';
                 }
 
-
                 if ($action == 'entry') {
                     $cabinet = $this->getActiveCabinet($member);
                     $cabinet->status = 1;
@@ -269,7 +332,7 @@ class RecordController extends Controller
                         'member_id' => $member->id,
                         'cabinet_id' => $cabinet->cabinet_no,
                         'action' => 'entry',
-                        'action_at' => \Carbon\Carbon::now()
+                        'action_at' => \Carbon\Carbon::now(),
                     ]);
 
                     $command = "#ENTRY[";
@@ -288,7 +351,7 @@ class RecordController extends Controller
                         'member_id' => $member->id,
                         'cabinet_id' => $cabinet->cabinet_no,
                         'action' => 'exit',
-                        'action_at' => \Carbon\Carbon::now()
+                        'action_at' => \Carbon\Carbon::now(),
                     ]);
                     $this->sendCommand("#EXIT[" . $cabinet->id . "]");
                     $cabinet_no = $cabinet->cabinet_no - 1;
@@ -296,11 +359,9 @@ class RecordController extends Controller
                     $this->sendCabinet($cabinet_command);
                 }
 
-
             } catch (Exception $e) {
                 return false;
             }
-
 
         }
     }
@@ -319,12 +380,12 @@ class RecordController extends Controller
 
     private function isMasterSet()
     {
-        return $admins_counts = \App\Admin::all()->count();;
+        return $admins_counts = \App\Admin::all()->count();
     }
 
     private function execPython()
     {
-        $command = escapeshellcmd('bash ./bash.sh');
+        $command = escapeshellcmd('sudo bash ./bash.sh');
         $output = shell_exec($command);
         return true;
     }
@@ -412,8 +473,10 @@ class RecordController extends Controller
             if ($workout != null) {
                 $action_at = $workout->action_at;
                 $last_exit_in_minute = \Carbon\Carbon::now()->diffInMinutes($action_at);
-                if ($last_exit_in_minute > 5)
+                if ($last_exit_in_minute > 5) {
                     return true;
+                }
+
             } else if ($workout == null) {
                 $cabinet_id = $cabinet->id;
                 return true;
@@ -427,4 +490,3 @@ class RecordController extends Controller
     }
 
 }
-

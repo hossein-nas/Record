@@ -18,6 +18,12 @@ body {
   font-size: 16px;
 }
 
+.manage-users .body .details .pagination::after,
+.manage-users .body .details::after,
+.manage-users .body .users-list .user-item::after,
+.manage-users .body .search-area .input-area::after,
+.manage-users .body .search-area::after,
+.manage-users::after,
 .cabinet-status::after,
 .recharge_card::after,
 .register_new form .actionarea::after,
@@ -30,10 +36,12 @@ body {
   display: table;
 }
 
+.manage-users .body .users-list,
 .register_new form .actionarea .submit,
 .register_new form .actionarea .card-reading,
 .container .cabinets,
 .container .main-section .info-panel,
+.manage-users .body .search-area .search-btn,
 .recharge_card .action-panel.active .submit,
 .recharge_card .card_reading .card_reading-btn,
 .container .main-section .action-panel .list-users,
@@ -46,6 +54,7 @@ body {
   cursor: default;
 }
 
+.manage-users .body .search-area .search-btn,
 .recharge_card .action-panel.active .submit,
 .recharge_card .card_reading .card_reading-btn,
 .container .main-section .action-panel .list-users,
@@ -62,6 +71,7 @@ body {
   margin-bottom: 7px;
 }
 
+.manage-users .body .search-area .search-btn:active,
 .recharge_card .action-panel.active .submit:active,
 .recharge_card .card_reading .card_reading-btn:active,
 .container .main-section .action-panel .list-users:active,
@@ -537,6 +547,13 @@ body {
   margin-bottom: 30px;
 }
 
+.cabinet-status .body h3.nodata {
+  display: block;
+  padding: 40px 0 40px;
+  text-align: center;
+  color: #777;
+}
+
 .cabinet-status .body .info .info-line {
   margin-bottom: 1px;
   font-size: 1.3rem;
@@ -566,11 +583,12 @@ body {
 }
 
 .cabinet-status .body .form {
-  margin-top: 45px;
+  margin-top: 40px;
 }
 
 .cabinet-status .body .form form {
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .cabinet-status .body .form form input[type=submit] {
@@ -578,7 +596,7 @@ body {
   background-color: #b34949;
   border: none;
   width: 180px;
-  height: 45px;
+  height: 55px;
   border-radius: 8px;
   font-size: 1.3rem;
   font-weight: bold;
@@ -589,5 +607,210 @@ body {
 .cabinet-status .body .form form input[type=submit]:active {
   opacity: 0.7;
   cursor: pointer;
+}
+
+.cabinet-status .body .form .open-cabinet input[type=submit] {
+  background-color: #2c9674;
+}
+
+.manage-users .header {
+  position: relative;
+  background-color: #dfdfdf;
+  padding: 5px 0 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #507a9a;
+  margin-bottom: 10px;
+}
+
+.manage-users .header a.back {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.9rem;
+  color: #777;
+  padding: 10px 10px 15px 10px;
+}
+
+.manage-users .header a.back:hover,
+.manage-users .header a.back:active {
+  background-color: #bbb;
+}
+
+.manage-users .body .search-area .input-area {
+  float: right;
+  width: 80%;
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+.manage-users .body .search-area .input-area .input-group {
+  float: right;
+}
+
+.manage-users .body .search-area .input-area .input-group > label {
+  color: #777;
+  display: inline-block;
+  margin-left: 5px;
+  line-height: 14px;
+  vertical-align: text-top;
+}
+
+.manage-users .body .search-area .input-area .input-group input[type=text] {
+  height: 38px;
+  border: 1px solid #bbb;
+  padding: 3px 5px 1px 2px;
+  border-radius: 4px;
+  font-size: 1.3rem;
+  width: 125px;
+}
+
+.manage-users .body .search-area .input-area .input-group .username {
+  width: 250px !important;
+  margin-left: 15px;
+}
+
+.manage-users .body .search-area .search-btn {
+  float: left;
+  width: 20%;
+  height: 40px;
+  border-radius: 8px;
+  line-height: 18px;
+  background-color: #78b1a1;
+  font-size: 1.2rem;
+}
+
+.manage-users .body .users-list {
+  display: block;
+  border: 2px solid #dcdcdc;
+  margin: 3px;
+  padding: 2px 4px;
+  height: 270px;
+}
+
+.manage-users .body .users-list .user-item {
+  position: relative;
+  height: 33px;
+  border-bottom: 1px solid #bbb;
+}
+
+.manage-users .body .users-list .user-item .id {
+  float: right;
+  color: #555;
+  display: inline-block;
+  margin-top: 1px;
+  border-left: 2px solid #ababab;
+  padding-left: 5px;
+  margin-left: 10px;
+  margin-top: 5px;
+  font-size: 1.2rem;
+  width: 60px;
+  text-align: left;
+}
+
+.manage-users .body .users-list .user-item .info .username {
+  display: inline-block;
+  font-size: 1.3rem;
+  color: #d06377;
+  margin-top: 3px;
+  font-weight: bold;
+}
+
+.manage-users .body .users-list .user-item .info > div {
+  color: #aaa;
+  display: inline-block;
+  font-size: 0.8rem;
+  top: 6px;
+  position: absolute;
+  margin-right: 5px;
+}
+
+.manage-users .body .users-list .user-item .info > div .national-code {
+  color: #666;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.manage-users .body .users-list .user-item .info .edit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 0.8rem;
+  color: #666;
+  padding: 6px 14px;
+  text-decoration: none;
+  margin-top: 2px;
+}
+
+.manage-users .body .users-list .user-item .info .edit:active {
+  cursor: pointer;
+  background-color: #bbb;
+}
+
+.manage-users .body .users-list .user-item:last-child {
+  border-bottom: none;
+}
+
+.manage-users .body .details {
+  padding-top: 5px;
+}
+
+.manage-users .body .details .pagination {
+  padding-right: 10px;
+  float: right;
+  width: 60%;
+}
+
+.manage-users .body .details .pagination > div {
+  float: right;
+  margin-left: 5px;
+}
+
+.manage-users .body .details .pagination .prev a,
+.manage-users .body .details .pagination .next a {
+  text-align: center;
+  display: block;
+  width: 65px;
+  height: 30px;
+  background-color: #aaa;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  padding: 4px 0px;
+}
+
+.manage-users .body .details .pagination .prev a:active,
+.manage-users .body .details .pagination .next a:active {
+  background-color: #919191;
+  cursor: pointer;
+}
+
+.manage-users .body .details .pagination .current {
+  line-height: 26px;
+  color: #777;
+  margin: 0 10px;
+}
+
+.manage-users .body .details .pagination .current .current-page {
+  font-weight: bold;
+  color: #555;
+}
+
+.manage-users .body .details .info {
+  padding-left: 10px;
+  float: right;
+  width: 40%;
+  font-size: 0.8rem;
+  color: #777;
+  text-align: left;
+}
+
+.manage-users .body .details .info span.all-pages,
+.manage-users .body .details .info span.all-members {
+  color: #444;
+  font-weight: bold;
 }
 
