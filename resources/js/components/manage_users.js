@@ -1,12 +1,12 @@
 window.$ = window.jQuery = require('jquery');
 
-export default function(){
-    var $manage_users = $('.manage-users').get(); 
+export default function () {
+    var $manage_users = $('.manage-users').get();
     if ($manage_users.length > 0) { // this makes sure that we are in manage-user page :)
         getInitialData();
 
     }
-   
+
 }
 
 
@@ -14,9 +14,9 @@ export default function(){
 
 function getInitialData() {
     $.ajax({
-        url : '/users/1/page',
-        type : 'POST',
-        success: function(data, $status){
+        url: '/users/1/page',
+        type: 'POST',
+        success: function (data, $status) {
             var $data = JSON.parse(data);
             if ($data.result == 'ok') {
                 manageItemHtml($data.data.all_users)
@@ -25,8 +25,8 @@ function getInitialData() {
             else {
                 console.log('khata');
             }
- 
- 
+
+
         }
     })
 
@@ -39,10 +39,10 @@ function getDataByPage($page) {
 function manageItemHtml($users) {
     var $len = $users.length;
     var users_list = $('.manage-users .body .users-list');
-    var new_list= $('');
+    var new_list = $('');
     users_list.empty();
 
-    for (var i = 0; i < $len; i++){
+    for (var i = 0; i < $len; i++) {
 
         var temp = $('<div class="user-item"> \
     <span class="id"> \
@@ -61,7 +61,7 @@ function manageItemHtml($users) {
         var name = $users[i].name + " " + $users[i].lastname;
         var national_code = $users[i].national_code;
         var id = $users[i].id;
-        temp.find('.id').html('#'+id);
+        temp.find('.id').html('#' + id);
         temp.find('.username').html(name);
         temp.find('.national-code').html(national_code);
         temp.find('.edit').attr('href', '/user/' + id + '/info');
@@ -106,24 +106,49 @@ function managePagination($data) {
                         ) \
                     </span>  \
                 </div>');
-    
-    
+
+
     if (prev_page == null) {
         template.find('.prev').html('');
     }
     else {
-        template.find('.prev').html('<a href="/manage/'+prev_page+'/page">قبلی</a>')
+        var prev_elem = $('<span> قبلی </span>');
+        managePageButtons(prev_elem, prev_page);
+        template.find('.prev').html(prev_elem)
     }
 
     if (next_page == null) {
         template.find('.next').html('');
     }
     else {
-        template.find('.next').html('<a href="/manage/'+next_page+'/page">قبلی</a>')
+        var next_elem = $('<span> بعدی </span>');
+        managePageButtons(next_elem, next_page);
+        template.find('.next').html(next_elem)
     }
 
     template.find('.current-page').html(current_page);
     template.find('.all-members').html(all_users);
     template.find('.all-pages').html(all_pages);
     details_elem.html(template);
+}
+
+
+function managePageButtons($elem, $page) {
+    $elem.click(function () {
+        $.ajax({
+            url: '/users/' + $page + '/page',
+            type: 'POST',
+            success: function (data, $status) {
+                var $data = JSON.parse(data);
+                if ($data.result == 'ok') {
+                    manageItemHtml($data.data.all_users)
+                    managePagination($data.data);
+                }
+                else {
+                    console.log('khata');
+                }
+            }
+        })
+    })
+
 }

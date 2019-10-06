@@ -10937,19 +10937,42 @@ function managePagination($data) {
   if (prev_page == null) {
     template.find('.prev').html('');
   } else {
-    template.find('.prev').html('<a href="/manage/' + prev_page + '/page">قبلی</a>');
+    var prev_elem = $('<span> قبلی </span>');
+    managePageButtons(prev_elem, prev_page);
+    template.find('.prev').html(prev_elem);
   }
 
   if (next_page == null) {
     template.find('.next').html('');
   } else {
-    template.find('.next').html('<a href="/manage/' + next_page + '/page">قبلی</a>');
+    var next_elem = $('<span> بعدی </span>');
+    managePageButtons(next_elem, next_page);
+    template.find('.next').html(next_elem);
   }
 
   template.find('.current-page').html(current_page);
   template.find('.all-members').html(all_users);
   template.find('.all-pages').html(all_pages);
   details_elem.html(template);
+}
+
+function managePageButtons($elem, $page) {
+  $elem.click(function () {
+    $.ajax({
+      url: '/users/' + $page + '/page',
+      type: 'POST',
+      success: function success(data, $status) {
+        var $data = JSON.parse(data);
+
+        if ($data.result == 'ok') {
+          manageItemHtml($data.data.all_users);
+          managePagination($data.data);
+        } else {
+          console.log('khata');
+        }
+      }
+    });
+  });
 }
 
 /***/ }),
@@ -11133,8 +11156,7 @@ function checkforNationalCode($elem) {
   var $name = $elem.val();
 
   if ($name.length === 0) {
-    $elem.css('border', '1px solid red');
-    return false;
+    return true;
   }
 
   var regex = /[0-9]{10,10}/i;
@@ -11153,8 +11175,7 @@ function checkforTelephone($elem) {
   var $name = $elem.val();
 
   if ($name.length === 0) {
-    $elem.css('border', '1px solid red');
-    return false;
+    return true;
   }
 
   var regex = /[0-9]{8,8}/i;
@@ -11173,8 +11194,7 @@ function checkforMobileNumber($elem) {
   var $name = $elem.val();
 
   if ($name.length === 0) {
-    $elem.css('border', '1px solid red');
-    return false;
+    return true;
   }
 
   var regex = /09[0-9]{9,9}/i;
@@ -11235,10 +11255,9 @@ function sendAjax($form) {
           window.location = "http://localhost/recharge_card";
         }, 1000);
       } else {
-        alert('کارت خوانده شده تکراری است. از کارت دیگری استفاده کنید.');
-        setTimeout(function () {
-          window.location = "http://localhost";
-        }, 1000);
+        alert('کارت خوانده شده تکراری است. از کارت دیگری استفاده کنید.'); // setTimeout(function(){
+        //     window.location = "http://localhost";
+        // },1000);
       }
     }
   });

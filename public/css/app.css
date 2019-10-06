@@ -18,6 +18,8 @@ body {
   font-size: 16px;
 }
 
+.user-info-page .body .actions::after,
+.user-info-page::after,
 .manage-users .body .details .pagination::after,
 .manage-users .body .details::after,
 .manage-users .body .users-list .user-item::after,
@@ -41,6 +43,7 @@ body {
 .register_new form .actionarea .card-reading,
 .container .cabinets,
 .container .main-section .info-panel,
+.user-info-page .body .actions .edit-user,
 .manage-users .body .search-area .search-btn,
 .recharge_card .action-panel.active .submit,
 .recharge_card .card_reading .card_reading-btn,
@@ -81,6 +84,28 @@ body {
   cursor: pointer;
 }
 
+.user-info-page .body .actions .edit-user {
+  border-radius: 0.7rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 8px 12px 15px;
+  text-align: center;
+  margin-bottom: 7px;
+}
+
+.user-info-page .body .actions .edit-user:active {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.user-info-page .body .actions .edit-user {
+  font-size: 1.2rem;
+  padding: 6px 15px 12px;
+}
+
+.user-info-page .body .actions .edit-user,
 .recharge_card .card_reading .card_reading-btn,
 .container .main-section .action-panel .register-btn {
   background-color: #d482a0;
@@ -101,7 +126,7 @@ body {
 
 .container .main-section {
   width: 100%;
-  height: 256px;
+  height: 222px;
   background-color: white;
   padding: 7px 0px;
 }
@@ -119,7 +144,7 @@ body {
   color: #555;
   margin: 0;
   padding: 0;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .container .main-section .info-panel h3 {
@@ -136,7 +161,7 @@ body {
 .container .main-section .info-panel h3.date .day {
   display: block;
   font-size: 1.2rem;
-  margin-bottom: 7px;
+  margin-bottom: 4px;
 }
 
 .container .main-section .info-panel h3.date .tarikh {
@@ -146,7 +171,8 @@ body {
 
 .container .main-section .info-panel h3.time {
   color: blue;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
+  margin: 0 0 10px;
 }
 
 .container .main-section .info-panel h3.time span {
@@ -154,7 +180,7 @@ body {
 }
 
 .container .main-section .info-panel .trained {
-  margin-top: 30px;
+  margin-top: 15px;
   padding-left: 10px;
   text-align: left;
   font-size: 1.2rem;
@@ -164,7 +190,7 @@ body {
 .container .main-section .info-panel .trained::before {
   padding-right: 5px;
   margin-top: 3px;
-  content: "\62A\645\631\6CC\646   \6A9\631\62F\647   \647\627   :";
+  content: "\62A\645\631\64A\646   \6A9\631\62F\647   \647\627   :";
   display: block;
   float: right;
   font-size: 0.9rem;
@@ -212,8 +238,8 @@ body {
 
 .container .cabinets {
   width: 100%;
-  height: 160px;
-  padding: 4px 8px;
+  height: 209px;
+  padding: 4px 6px;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -228,24 +254,25 @@ body {
 
 .container .cabinets .row section.cabinet {
   float: left;
-  width: 36px;
-  height: 74px;
+  width: 49px;
+  height: 64px;
   margin-left: 3px;
   background-color: white;
   position: relative;
+  margin-bottom: 4px;
 }
 
 .container .cabinets .row section.cabinet > label {
   background-color: #4d8c4d;
   color: white;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   text-align: center;
   margin: 8px auto;
   display: block;
-  width: 25px;
+  width: 30px;
   border-radius: 20px;
-  height: 25px;
-  line-height: 25px;
+  height: 30px;
+  line-height: 28px;
 }
 
 .container .cabinets .row section.cabinet > label.active {
@@ -331,13 +358,15 @@ body {
 
 .register_new form .textareagroup textarea {
   border: 1px solid #bbb;
-  padding: 3px 7px 3px 0;
+  padding: 0px 7px 3px 3px;
   font-size: 1rem;
   display: block;
   float: right;
   width: 320px;
   resize: none;
   height: 100px;
+  direction: ltr;
+  text-align: left;
 }
 
 .register_new form .actionarea {
@@ -768,8 +797,8 @@ body {
   margin-left: 5px;
 }
 
-.manage-users .body .details .pagination .prev a,
-.manage-users .body .details .pagination .next a {
+.manage-users .body .details .pagination .prev span,
+.manage-users .body .details .pagination .next span {
   text-align: center;
   display: block;
   width: 65px;
@@ -782,8 +811,8 @@ body {
   padding: 4px 0px;
 }
 
-.manage-users .body .details .pagination .prev a:active,
-.manage-users .body .details .pagination .next a:active {
+.manage-users .body .details .pagination .prev span:active,
+.manage-users .body .details .pagination .next span:active {
   background-color: #919191;
   cursor: pointer;
 }
@@ -812,5 +841,107 @@ body {
 .manage-users .body .details .info span.all-members {
   color: #444;
   font-weight: bold;
+}
+
+.user-info-page .header {
+  position: relative;
+  background-color: #dfdfdf;
+  padding: 5px 0 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #507a9a;
+  margin-bottom: 10px;
+}
+
+.user-info-page .header a.back {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.9rem;
+  color: #777;
+  padding: 10px 10px 15px 10px;
+}
+
+.user-info-page .header a.back:hover,
+.user-info-page .header a.back:active {
+  background-color: #bbb;
+}
+
+.user-info-page .body .title {
+  position: relative;
+  height: 80px;
+}
+
+.user-info-page .body .title .username {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #777;
+  padding-left: 75px;
+  padding-top: 15px;
+}
+
+.user-info-page .body .title .username > span {
+  font-size: 2rem;
+  color: #d62a2a;
+}
+
+.user-info-page .body .title .remaining-days {
+  background-color: #eee;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 110px;
+  height: 70px;
+  text-align: center;
+  color: #b72f74;
+  font-size: 1.9rem;
+  line-height: 28px;
+  border: 2px solid #dedede;
+  border-radius: 6px;
+}
+
+.user-info-page .body .title .remaining-days::before {
+  display: block;
+  content: "\631\648\632\647\627\6CC   \628\627\642\6CC\200C\645\627\646\62F\647";
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.user-info-page .body .user-info {
+  margin: 0 20px 10px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #d4d4d4;
+  margin-top: 30px;
+}
+
+.user-info-page .body .user-info > div {
+  display: block;
+  margin: 0 20px 10px;
+  font-size: 0.8rem;
+  color: #777;
+  height: 30px;
+  line-height: 1.8rem;
+  position: relative;
+}
+
+.user-info-page .body .user-info > div > span {
+  position: absolute;
+  left: 0;
+  height: 30px;
+  width: 470px;
+  font-size: 1.1rem;
+  color: #333;
+  text-align: left;
+}
+
+.user-info-page .body .actions {
+  padding: 0 20px 0;
+}
+
+.user-info-page .body .actions .edit-user {
+  font-size: 1.1rem;
+  text-decoration: none;
 }
 

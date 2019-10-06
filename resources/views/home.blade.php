@@ -4,7 +4,6 @@
 
     <div class="main-section">
         <div class="info-panel">
-            <p>امروز</p>
             <h3 class="date">
                 <span class="day">
                     چهارشنبه

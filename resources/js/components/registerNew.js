@@ -54,8 +54,7 @@ function checkforNationalCode($elem){
     var $name = $elem.val();
 
     if ( $name.length === 0 ){
-        $elem.css('border', '1px solid red');
-        return false;
+        return true;
     }
 
     var regex = /[0-9]{10,10}/i;
@@ -72,8 +71,7 @@ function checkforTelephone($elem){
     var $name = $elem.val();
 
     if ( $name.length === 0 ){
-        $elem.css('border', '1px solid red');
-        return false;
+        return true;
     }
 
     var regex = /[0-9]{8,8}/i;
@@ -90,8 +88,7 @@ function checkforMobileNumber($elem){
     var $name = $elem.val();
 
     if ( $name.length === 0 ){
-        $elem.css('border', '1px solid red');
-        return false;
+        return true;
     }
 
     var regex = /09[0-9]{9,9}/i;
@@ -150,9 +147,9 @@ function sendAjax($form){
                 }
                 else{
                     alert('کارت خوانده شده تکراری است. از کارت دیگری استفاده کنید.');
-                    setTimeout(function(){
-                        window.location = "http://localhost";
-                    },1000);
+                    // setTimeout(function(){
+                    //     window.location = "http://localhost";
+                    // },1000);
                 }
             }
     })

@@ -38,4 +38,5 @@ Route::post('/action/cabinet/{id}/open', 'RecordController@cabinet_open');
 
 Route::get('/manage/users', 'RecordController@manage_users');
 Route::post('/users/{id}/page', 'RecordController@get_users_list');
+Route::get('/user/{id}/info', 'RecordController@showInfoPage');
 

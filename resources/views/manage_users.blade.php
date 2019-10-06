@@ -41,7 +41,7 @@
             <div class="details">
                 <div class="pagination">
                     <div class="prev">
-                        <a href="#">قبلی</a>
+                        <span >قبلی</span>
                     </div>
                     <div class="current">
                         صفحه(
@@ -49,7 +49,7 @@
                         )
                     </div>
                     <div class="next">
-                        <a href="#">بعدی</a>
+                        <span >بعدی</span>
                     </div>
 
                 </div>

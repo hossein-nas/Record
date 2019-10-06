@@ -9,6 +9,9 @@ use \Morilog\Jalali\Jalalian;
 
 class RecordController extends Controller
 {
+
+    use \App\Traits\ManageUsers;
+
     public function index()
     {
         $this->execPython();
@@ -34,12 +37,12 @@ class RecordController extends Controller
             $result = [];
             $all_users_count = \App\Member::all()->count();
             $all_pages = (int) ceil($all_users_count / 8.0);
-            $all_users = \App\Member::offset($start)->limit(8)->get();
+            $all_users = \App\Member::orderBy('id', 'DESC')->offset($start)->limit(8)->get();
             $result = array_merge($result, [
                 'start' => $start,
                 'count' => $all_users_count,
                 'pages' => $all_pages,
-                'curren_page' => $page,
+                'current_page' => $page,
                 'all_users' => $all_users,
                 'current_page_count' => $all_users->count(),
             ]);
@@ -194,7 +197,7 @@ class RecordController extends Controller
     public function get_info()
     {
         $todays_workout = \App\Workout::where('action_at', '>', \Carbon\Carbon::now()->today())->where('action', 'exit')->get()->count();
-        $todays_registered = \App\MemberPlan::where('start_at', '>', \Carbon\Carbon::now()->today())->get()->count();
+        $todays_registered = \App\MemberPlan::where('start_at', '>=', \Carbon\Carbon::now()->today())->get()->count();
         $ret = array(
             "weakday_name" => Jalalian::now()->format('l'),
             "date" => Jalalian::now()->format('y/m/d'),

@@ -27,7 +27,7 @@
         </div>
         <div class="textareagroup">
             <label for="name">آدرس: </label>
-            <textarea name="user_address" class="user_address" >تهران - شهرقدس - </textarea>
+            <textarea name="user_address" class="user_address" >Tehran - Shahr-e Qods - </textarea>
         </div>
         <div class="textgroup">
             <label for="name">تلفن همراه: </label>
